@@ -1,0 +1,28 @@
+header {
+    height: 100px;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.viewable-header {
+    background: rgba(11, 81, 138, 0.425);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+    height: 100px;
+    min-width: 768px;
+    padding: 0 38px;
+}
+
+.headerlogo {
+    margin-top: 16px;
+    width: 100%;
+    height: 100%;
+}
+
+.logo {
+    margin-top: 16px;
+    width: 5%;
+    height: 5%;
+}
