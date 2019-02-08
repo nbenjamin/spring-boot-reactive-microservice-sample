@@ -1,6 +1,13 @@
 server:
   port: 8282
 
+spring:
+  application:
+    name: eureka-service
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080
 eureka:
   client:
     register-with-eureka: false

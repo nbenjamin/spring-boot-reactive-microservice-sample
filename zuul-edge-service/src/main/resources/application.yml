@@ -1,6 +1,10 @@
 spring:
   application:
     name: zuul-edge-service
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080
 server:
   port: 8084
 zuul:

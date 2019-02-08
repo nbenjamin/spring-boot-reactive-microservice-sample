@@ -1,8 +1,18 @@
 spring:
   application:
     name: product-service
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080
 server:
   port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 eureka:
   client:

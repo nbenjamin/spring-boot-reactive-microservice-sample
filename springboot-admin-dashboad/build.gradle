@@ -20,25 +20,20 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
-	maven { url 'https://repo.spring.io/milestone' }
 }
 
 ext {
-	set('springBootAdminVersion', '2.1.0')
-	set('springCloudVersion', 'Greenwich.RELEASE')
-
+	set('springBootAdminVersion', '2.1.1')
 }
 
 dependencies {
-	implementation "de.codecentric:spring-boot-admin-starter-client:${springBootAdminVersion}"
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-zuul'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'de.codecentric:spring-boot-admin-starter-server'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 dependencyManagement {
 	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
 	}
 }
