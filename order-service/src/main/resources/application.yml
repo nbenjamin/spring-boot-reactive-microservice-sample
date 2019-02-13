@@ -1,0 +1,17 @@
+order:
+  datasource:
+    database: order-service
+    host: localhost
+    post: 5432
+    username: order
+    password: admin
+
+server:
+  port: 8088
+
+logging:
+  pattern:
+    console: "%d %-5level %logger: %msg%n"
+  level:
+    root: DEBUG
+    org.springframework.*: INFO

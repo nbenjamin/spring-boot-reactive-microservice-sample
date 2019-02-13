@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-order-table
+      author: order-service
+      preConditions:
+        - not:
+            tableExists:
+              tableName: order
+    changes:
+      - createTable:
+          columns:
+            - column:
+                name: id
+                type: BIGINT
+                autoIncrement: true
+                constraints:
+                  nullable: false
+                  primaryKey: true
+            - column:
+                name: orderDate
+                type: TIMESTAMP
+                defaultValueComputed: NOW()
+                constraints:
+                  nullable: false
+            - column:
+                name: userId
+                type: BIGINT
+                constraints:
+                  nullable: false
