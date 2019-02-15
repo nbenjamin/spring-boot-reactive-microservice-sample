@@ -1,10 +1,20 @@
-order:
+spring:
   datasource:
-    database: order-service
-    host: localhost
-    post: 5432
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/order-service
     username: order
     password: admin
+
+# JPA
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: create
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
 
 server:
   port: 8088
