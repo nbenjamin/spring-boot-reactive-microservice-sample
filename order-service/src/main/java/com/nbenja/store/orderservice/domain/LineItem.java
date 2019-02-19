@@ -1,7 +1,10 @@
 package com.nbenja.store.orderservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.io.Serializable;
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,12 +26,15 @@ public class LineItem implements Serializable {
 
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
+  @Column(name = "line_item_id")
   private Long id;
   private String productId;
   private String name;
   private String description;
   private double price;
-  private int quatity;
-  @ManyToOne
+  private int quantity;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "order_id", nullable = false)
+  @JsonIgnore
   private Order order;
 }
