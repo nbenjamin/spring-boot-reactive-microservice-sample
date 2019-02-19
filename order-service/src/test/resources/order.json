@@ -1,0 +1,28 @@
+{
+  "userId": 10001,
+  "lineItems": [
+    {
+      "productId": null,
+      "name": "Iphone",
+      "description": "Iphone X 64 GB Gold",
+      "price": 899.99,
+      "quantity": 0
+    },
+    {
+      "productId": null,
+      "name": "Iphone",
+      "description": "Iphone X 128 GB White",
+      "price": 999.99,
+      "quantity": 0
+    }
+  ],
+  "orderStatus": null,
+  "address": {
+    "type": "SHIPPING",
+    "addressLine1": "sadler",
+    "addressLine2": null,
+    "city": "Richmond",
+    "state": "VA",
+    "country": "USA"
+  }
+}

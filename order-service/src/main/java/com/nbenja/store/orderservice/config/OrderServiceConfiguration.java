@@ -1,79 +1,65 @@
 package com.nbenja.store.orderservice.config;
 
-import com.nbenja.store.orderservice.adapter.datastore.OrderRepository;
-import com.nbenja.store.orderservice.domain.Order;
-import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
-import io.r2dbc.postgresql.PostgresqlConnectionFactory;
-import io.r2dbc.spi.Connection;
-import io.r2dbc.spi.ConnectionFactory;
-import io.r2dbc.spi.Result;
-import java.time.LocalDateTime;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.r2dbc.function.DatabaseClient;
-import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 @Configuration
-@EnableR2dbcRepositories
-public class OrderServiceConfiguration {
+public class OrderServiceConfiguration implements WebMvcConfigurer {
 
-  @Value("${order.datasource.host}")
-  private String host;
+  private static final String MESSAGE_RESOURCE_BASENAME = "classpath:messages";
+  private static final String DEFAULT_ENCODING = "UTF-8";
+  private static final String DATE_FORMAT = "MM/dd/uuuu";
+  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
-  @Value("${order.datasource.database}")
-  private String database;
-
-  @Value("${order.datasource.username}")
-  private String username;
-
-  @Value("${order.datasource.password}")
-  private String password;
+  @Bean
+  public ObjectMapper objectMapper() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    JavaTimeModule javaTimeModule = new JavaTimeModule();
+    javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
+    javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DATE_FORMATTER));
+    objectMapper.registerModule(javaTimeModule);
+    objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+    objectMapper.setSerializationInclusion(Include.NON_EMPTY);
+    return objectMapper;
+  }
 
   /**
-   * https://spring.io/blog/2018/12/12/spring-data-r2dbc-1-0-m1-released
-   *
-   * @return
+   * Used for loading message resources
+   * @return {@link MessageSource}
    */
   @Bean
-  public DatabaseClient databaseClient() {
-    return DatabaseClient.create(connectionFactory());
+  public MessageSource messageSource() {
+    ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+    messageSource.setBasename(MESSAGE_RESOURCE_BASENAME);
+    messageSource.setDefaultEncoding(DEFAULT_ENCODING);
+    return messageSource;
   }
-
-  private ConnectionFactory connectionFactory() {
-    PostgresqlConnectionConfiguration configuration = PostgresqlConnectionConfiguration
-        .builder()
-        .database(database)
-        .host(host)
-        .port(5432)
-        .username(username)
-        .password(password)
-        .build();
-    return new PostgresqlConnectionFactory(configuration);
-  }
-
-  //Seed data
 
   @Bean
-  CommandLineRunner commandLineRunner() {
-    return args -> {
-//      Mono<Connection> connection = Mono.from(connectionFactory().create());
-//      Flux<Result> ids = connection.flatMapMany(con ->
-//        con.createStatement("INSERT INTO ORDER (id) values ($1)")
-//        .bind("$1", 10)
-//          .add().execute()
-//      );
-
-      databaseClient().execute().sql("DELETE FROM orders").then().block();
-
-      databaseClient().insert()
-          .into(Order.class)
-          .using(new Order(1L, 100L))
-          .then().block();
-
-    };
+  public LocalValidatorFactoryBean localValidatorFactoryBean() {
+    LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
+    validatorFactoryBean.setValidationMessageSource(messageSource());
+    return validatorFactoryBean;
   }
+
+
 }
