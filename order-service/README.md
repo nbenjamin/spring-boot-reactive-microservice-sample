@@ -82,6 +82,27 @@ Response:
   ]
 }
 ```
+
+#### Dockerize Order service
+Commands to create docker image
+```properties
+docker build -t order-service .
+```
+
+after the successful build, you can find those images locally 
+```properties
+docker images   // will list all the images available in local
+```
+Remove docker image
+```properties
+docker rmi imageName:version
+```
+Remove docker containers
+```properties
+docker rm containerId
+```
+
+
 #### Junit testing
 
 ##### Database layer Testing

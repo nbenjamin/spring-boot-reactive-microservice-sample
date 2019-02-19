@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://db:5432/order-service
+    username: order
+    password: admin
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+# JPA
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: create
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+
+server:
+  port: 8088
+
+logging:
+  pattern:
+    console: "%d %-5level %logger: %msg%n"
+  level:
+    root: DEBUG
+    org.springframework.*: INFO
