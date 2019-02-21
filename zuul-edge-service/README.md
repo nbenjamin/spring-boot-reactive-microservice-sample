@@ -9,3 +9,8 @@ Main components
   4. Error Filters
   
 
+
+Registered services
+  1. Product Service
+  2. Order Service
+  

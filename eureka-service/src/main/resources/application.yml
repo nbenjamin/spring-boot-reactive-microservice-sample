@@ -8,7 +8,11 @@ spring:
     admin:
       client:
         url: http://localhost:8080
+
 eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
+  # this is required if there is only one instance of eureka
+  server:
+    maxThreadsForPeerReplication: 0

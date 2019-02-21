@@ -3,8 +3,10 @@ package com.nbenja.store.orderservice;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-@SpringBootApplication(scanBasePackages = "com.nbenja.store.orderservice")
+@EnableEurekaClient
+@SpringBootApplication
 public class OrderserviceApplication {
 
 	public static void main(String[] args) {
