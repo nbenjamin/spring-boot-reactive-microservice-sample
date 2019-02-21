@@ -15,6 +15,10 @@ zuul:
       path: /service/products/**
       serviceId: product-service
       strip-prefix: false
+    order-service:
+      path: /service/orders/**
+      serviceId: order-service
+      strip-prefix: false
 
 eureka:
   client:
@@ -23,11 +27,6 @@ eureka:
 
 logging:
   level:
-    com:
-      netflix:
-        eureka: debug
-        discovery: debug
-    org:
-      springframework:
-        cloud:
-          netflix: trace
+    root: INFO
+    com.netflix.*: INFO
+    org.springframework.cloud.*: INFO

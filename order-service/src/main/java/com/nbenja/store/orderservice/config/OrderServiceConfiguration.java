@@ -1,7 +1,6 @@
 package com.nbenja.store.orderservice.config;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,14 +12,10 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 @Configuration
 public class OrderServiceConfiguration implements WebMvcConfigurer {
@@ -55,6 +50,7 @@ public class OrderServiceConfiguration implements WebMvcConfigurer {
   }
 
   @Bean
+  @Primary
   public LocalValidatorFactoryBean localValidatorFactoryBean() {
     LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
     validatorFactoryBean.setValidationMessageSource(messageSource());

@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: order-service
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/order-service
@@ -18,12 +20,30 @@ spring:
         temp:
           use_jdbc_metadata_defaults: false
 
+# Kafka Configuration
+  cloud:
+    stream:
+      kafka:
+        binder:
+          zkNodes: localhost:2181
+          brokers: localhost:9092
+      bindings:
+        input:
+          destination: order
+
+
 server:
   port: 8088
+
+# Eureka configuration
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8282/eureka
 
 logging:
   pattern:
     console: "%d %-5level %logger: %msg%n"
   level:
-    root: DEBUG
+    root: INFO
     org.springframework.*: INFO
