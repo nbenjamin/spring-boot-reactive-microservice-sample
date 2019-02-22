@@ -23,6 +23,7 @@ import org.springframework.cloud.stream.test.binder.MessageCollector;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.messaging.Message;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -51,7 +52,8 @@ public class OrderEventStreamListenerTest {
     orderEvent.setCreatedTime(LocalDateTime.now());
     orderEvent.setRequest(order);
 
-    processor.input().send(withPayload(orderEvent).build());
+    Message message = new GenericMessage(objectMapper.writeValueAsString(orderEvent));
+    processor.input().send(message);
 
     Optional<Order> orderCreated = orderRepository.findById(1L);
 

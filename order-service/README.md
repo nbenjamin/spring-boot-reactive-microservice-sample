@@ -83,6 +83,18 @@ Response:
 }
 ```
 
+#### Synchronize and Asynchronize implementation for Order service
+   
+   1. Rest endpoint for Synchronize
+   
+ 
+   2. Kafka message listener for Asynchronize
+   
+#### Canonical messaging data model using Avro
+
+  1. Data Serialization and exchange
+  2. Store the data in compact and efficient format
+
 #### Dockerize Order service
 Commands to create docker image
 ```properties

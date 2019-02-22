@@ -1,0 +1,39 @@
+Configuration:
+  name: order-service
+  Properties:
+    Property:
+      name: path
+      value: "logs"
+  Appenders:
+    Console:
+      name: ConsoleAppender
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+    File:
+      name: FileAppender
+      fileName: ${path}/order-service.log
+      PatternLayout:
+        pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+    Kafka:
+      name: KafkaAppender
+      topic: service-logs
+      Property:
+        name: bootstrap.servers
+        value: "localhost:9092"
+      PatternLayout:
+        pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+  Loggers:
+    Root:
+      level: ERROR
+      AppenderRef:
+        - ref: ConsoleAppender
+    Logger:
+      - name: com.nbenja.store.orderservice.adapter.message
+        level: debug
+        AppenderRef:
+          - ref: FileAppender
+            level: debug
+        AppenderRef:
+          - ref: KafkaAppender
+            level: debug

@@ -29,8 +29,11 @@ spring:
           brokers: localhost:9092
       bindings:
         input:
+          group: ${spring.application.name}
           destination: order
-
+        output:
+          group: ${spring.application.name}
+          destination: order
 
 server:
   port: 8088
@@ -41,9 +44,9 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8282/eureka
 
-logging:
-  pattern:
-    console: "%d %-5level %logger: %msg%n"
-  level:
-    root: INFO
-    org.springframework.*: INFO
+#logging:
+#  pattern:
+#    console: "%d %-5level %logger: %msg%n"
+#  level:
+#    root: INFO
+#    org.springframework.*: INFO

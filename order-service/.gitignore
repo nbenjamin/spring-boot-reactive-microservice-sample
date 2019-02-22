@@ -23,3 +23,9 @@
 /nbdist/
 /.nb-gradle/
 /build/
+
+### Logs ###
+/logs/
+
+### docker ###
+/docker/full-stack/
